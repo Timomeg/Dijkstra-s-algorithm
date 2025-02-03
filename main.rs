@@ -1,11 +1,13 @@
 use text_io::read;
 use std::collections::HashMap;
 #[derive(Debug)]
+// Graph structure
 struct Graph{
     num_of_nodes: usize,
     matrix: Vec<Vec<u32>>
 }
 impl Graph{
+    // Matrix builder
     fn matrix_build(&mut self){
         println!("Enter the paths between nodes");
         println!("If there is no path between nodes");
@@ -26,9 +28,12 @@ impl Graph{
             }
         }
     }
+    // Algorithm itself
     fn dijkstra(&self, node_number:usize) -> HashMap<usize, u32>{
+        
         let mut map_of_shortest_paths: HashMap<usize, u32> = HashMap::new();
         let mut map_of_visited_nodes: HashMap<usize, bool> = HashMap::new();
+        // first step of algorithm
         for i in 0..self.num_of_nodes{
             map_of_visited_nodes.insert(i, false);
             if i == node_number-1{
@@ -39,8 +44,8 @@ impl Graph{
         }
         let mut current_node = node_number - 1;
         let mut min_node:usize = 0;
+        // second step of algorithm
         while !map_of_visited_nodes.is_empty(){
-
             let mut min_path:u32 = 2^32;
             for (finish, _state) in map_of_visited_nodes.iter(){
                 if map_of_shortest_paths[finish] > (self.matrix[current_node][*finish] + map_of_shortest_paths[&current_node])
@@ -63,25 +68,9 @@ impl Graph{
 }
 fn main() {
     println!("Enter the number of nodes:");
-    //let num_of_nodes:usize = read!();
-    //let matrix = Vec::new();
-    let num_of_nodes:usize = 6;
-    let matrix = vec![vec![0,7,9,0,0,14],vec![7,0,10,15,0,0],vec![9,10,0,11,0,2],
-                      vec![0,15,11,0,6,0],vec![0,0,0,6,0,9],vec![14,0,2,0,9,0]];
-    let mut graph = Graph{
-        num_of_nodes,
-        matrix
-    };
-    //graph.matrix_build();
-    let shortest_paths:HashMap<usize, u32> = graph.dijkstra(1);
+    graph.matrix_build();
+    let input:u32 = read!();
+    let shortest_paths:HashMap<usize, u32> = graph.dijkstra(input);
     println!("{:?}", shortest_paths);
-
-    for node in graph.matrix{
-        for path in node{
-            print!("{}   ",path);
-        }
-        println!();
-    }
-
 
 }
