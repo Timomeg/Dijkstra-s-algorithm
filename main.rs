@@ -30,7 +30,7 @@ impl Graph{
     }
     // Algorithm itself
     fn dijkstra(&self, node_number:usize) -> HashMap<usize, u32>{
-        
+
         let mut map_of_shortest_paths: HashMap<usize, u32> = HashMap::new();
         let mut map_of_visited_nodes: HashMap<usize, bool> = HashMap::new();
         // first step of algorithm
@@ -68,8 +68,14 @@ impl Graph{
 }
 fn main() {
     println!("Enter the number of nodes:");
+    let num_of_nodes:usize = read!();
+    let matrix:Vec<Vec<u32>> = Vec::new();
+    let mut graph = Graph{
+        num_of_nodes,
+        matrix
+    };
     graph.matrix_build();
-    let input:u32 = read!();
+    let input:usize = read!();
     let shortest_paths:HashMap<usize, u32> = graph.dijkstra(input);
     println!("{:?}", shortest_paths);
 
